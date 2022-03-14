@@ -1,0 +1,68 @@
+public class QueueArr {
+    static class Queue{
+        static int size;
+        static int arr[];
+        static int rear=-1;
+        static int front;
+
+        Queue(int size){
+            arr=new int[size];
+            this.size=size;
+        }
+
+        public static boolean isEmpty(){
+            return rear==-1;
+        }
+
+        public static void add(int data){
+            if(rear==size-1){
+                System.out.println("full Queue");
+                return;
+            }
+            front=0;
+            rear++;
+            arr[rear]=data;
+        }
+
+        public static int remove(){
+            if(isEmpty()){
+                System.out.println("Empty Queue");
+                return -1;
+            }
+            int res=arr[0];
+//            if(rear==front){
+//                rear=front=-1;
+//            }
+            for(int i=0;i<rear;i++)
+            {
+                arr[i]=arr[i+1];
+            }
+            rear--;
+            return res;
+        }
+
+        public static int peek(){
+            if(isEmpty()){
+                System.out.println("Empty Queue");
+                return -1;
+            }
+            return arr[0];
+        }
+    }
+
+    public static void main(String[] args) {
+        Queue q=new Queue(5);
+        q.add(3);
+        q.add(6);
+        q.add(9);
+        q.add(12);
+        q.add(18);
+        q.remove();
+        System.out.println(q.rear + "\t" + q.front);
+        while(!q.isEmpty()){
+            System.out.println(q.peek());
+            q.remove();
+        }
+
+    }
+}
