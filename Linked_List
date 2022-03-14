@@ -1,0 +1,130 @@
+import org.w3c.dom.Node;
+
+import java.util.*;
+
+
+//creating a node class
+public class Linkedlist {
+    Node head;
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+    //creating a method to insert an element at a first position
+    public void addFirst(int data){
+        Node newNode=new Node(data);
+        if(head==null)
+        {
+            head=newNode;
+            return;
+        }
+        newNode.next=head;
+        head=newNode;
+    }
+    //creating a method to insert an element at last position
+    public void addLast(int data)
+    {
+        Node newNode=new Node(data);
+        if(head==null)
+        {
+            head=newNode;
+            return;
+        }
+        Node current=head;
+        if(current.next!=null)
+        {
+            current=current.next;
+        }
+        current.next=newNode;
+    }
+
+    //creating a method to insert an element at any position
+    public void addAtAny(int pos,int data)
+    {
+        Node newNode=new Node(data);
+        if(head==null)
+        {
+            head=newNode;
+            return;
+        }
+        int s=0;
+        Node current=head;
+        if((pos-2)!=s)
+        {
+            current=current.next;
+            s+=1;
+        }
+        Node temp=current.next;
+        current.next=newNode;
+        newNode.next=temp;
+    }
+
+    //creating a method to delete a given value
+    public void delete(int g){
+        Node cv=head;
+        Node temp=null;
+        if(cv.data==g)
+        {
+            head=cv.next;
+            return;
+        }
+        while(cv.data!=g)
+        {
+            temp=cv;
+            cv=cv.next;
+        }
+        if(cv==null)
+        {
+            return;
+        }
+        temp.next=cv.next;
+    }
+    //crating a method to print all elements in a list
+    public void printList(){
+        if(head==null)
+        {
+            System.out.println("List is empty");
+            return;
+        }
+        Node cr=head;
+        while(cr!=null)
+        {
+            System.out.print(cr.data+"\t");
+            cr=cr.next;
+        }
+    }
+    //Counting the no. of nodes
+    public int Count(Node n){
+        if(head==null){
+            return 0;
+        }
+        if(n==null){
+            return 0;
+        }
+        return 1+Count(n.next);
+
+
+    }
+
+    //methods complete
+    public static void main(String[] args) {
+        Linkedlist list=new Linkedlist();
+        Scanner sc=new Scanner(System.in);
+        list.addFirst(3);
+        list.addFirst(6);
+        list.addFirst(5);
+        list.printList();
+        System.out.println("\n");
+     //   list.delete(6);
+        //list.printList();
+        //System.out.println("-----------\n");
+        System.out.println(list.Count(list.head)+"\n");
+        list.addAtAny(3,4);
+        list.printList();
+    }
+}
