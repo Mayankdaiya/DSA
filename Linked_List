@@ -78,11 +78,7 @@ public class Linkedlist {
             temp=cv;
             cv=cv.next;
         }
-        if(cv==null)
-        {
-            return;
-        }
-        temp.next=cv.next;
+        temp=cv.next;
     }
     //crating a method to print all elements in a list
     public void printList(){
@@ -120,9 +116,7 @@ public class Linkedlist {
         list.addFirst(5);
         list.printList();
         System.out.println("\n");
-     //   list.delete(6);
-        //list.printList();
-        //System.out.println("-----------\n");
+        list.delete(6);
         System.out.println(list.Count(list.head)+"\n");
         list.addAtAny(3,4);
         list.printList();
