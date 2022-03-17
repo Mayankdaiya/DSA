@@ -116,7 +116,7 @@ public class Linkedlist {
         list.addFirst(5);
         list.printList();
         System.out.println("\n");
-        list.delete(6);
+        list.delete(3);
         System.out.println(list.Count(list.head)+"\n");
         list.addAtAny(3,4);
         list.printList();
