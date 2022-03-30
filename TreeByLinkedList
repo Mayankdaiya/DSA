@@ -1,0 +1,131 @@
+import java.util.*;
+
+public class BinTree {
+    static class Node{
+        int data;
+        Node left;
+        Node right;
+        Node(int data){
+            this.data=data;
+        }
+
+        static class BinaryTree{
+            static int i=-1;
+            public static Node BuildTree(int Nodes[]){
+                i++;
+                if(Nodes[i]==-1){
+                    //System.out.println("Tree is Empty");
+                    return null;
+                }
+                Node newNode=new Node(Nodes[i]);
+                newNode.left=BuildTree(Nodes);
+                newNode.right=BuildTree(Nodes);
+                return newNode;
+            }
+
+            public static void preorder(Node root){
+                if(root==null){
+                    System.out.print("Null"+"\t");
+                    return;
+                }
+                System.out.print(root.data+"\t");
+                preorder(root.left);
+                preorder(root.right);
+            }
+
+            public static void inorder(Node root){
+                if(root==null){
+                    System.out.print("Null"+"\t");
+                    return;
+                }
+                preorder(root.left);
+                System.out.print(root.data+"\t");
+                preorder(root.right);
+            }
+
+            public static void postorder(Node root){
+                if(root==null){
+                    System.out.print("Null"+"\t");
+                    return;
+                }
+                preorder(root.left);
+                preorder(root.right);
+                System.out.print(root.data+"\t");
+            }
+
+            public static void levelorder(Node root){
+                if(root==null){
+                    System.out.println("Null");
+                    return;
+                }
+                Queue<Node> q=new LinkedList<>();
+                q.add(root);
+                q.add(null);
+
+                while(!q.isEmpty()){
+                    Node currNode=q.remove();
+                    if(currNode==null){
+                        System.out.println();
+                        if(q.isEmpty()){
+                            break;
+                        } else{
+                            q.add(null);
+                        }
+                    } else{
+                        System.out.print(currNode.data+"\t");
+                       if(currNode.left!=null){
+                           q.add(currNode.left);
+                       }
+                       if(currNode.right!=null){
+                           q.add(currNode.right);
+                       }
+                    }
+                }
+            }
+
+
+
+
+            public static int countofnodes(Node root){
+                if(root==null){
+                    return 0;
+                }
+                int leftnode = countofnodes(root.left);
+                int rightnode = countofnodes(root.right);
+                return leftnode+rightnode+1;
+            }
+
+            public static int sumofnodes(Node root){
+                if(root==null){
+                    return 0;
+                }
+                int leftnode = sumofnodes(root.left);
+                int rightnode = sumofnodes(root.right);
+                return leftnode+rightnode+root.data;
+            }
+
+            public static int heightofnodes(Node root){
+                if(root==null){
+                    return 0;
+                }
+                int leftnode = heightofnodes(root.left);
+                int rightnode = heightofnodes(root.right);
+
+                int myheight=Math.max(leftnode, rightnode) +1;
+                return myheight;
+            }
+        }
+
+        public static void main(String[] args) {
+            int Nodes[]={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
+            BinaryTree tree=new BinaryTree();
+            Node root=tree.BuildTree(Nodes);
+            System.out.println(root.right.data);
+            tree.levelorder(root);
+            System.out.println(tree.countofnodes(root));
+            System.out.println(tree.sumofnodes(root));
+            System.out.println(tree.heightofnodes(root));
+            tree.preorder(root);
+        }
+    }
+}
