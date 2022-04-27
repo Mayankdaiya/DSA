@@ -1,0 +1,123 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class BTLL {
+    Node root;
+
+    static class Node{
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data){
+            this.data=data;
+        }
+    }
+
+    public Node insertion(Node nn){
+        Scanner sc=new Scanner(System.in);
+        if(nn.data==-1){
+            return null;
+        }
+        if(root==null){
+            root=nn;
+        }
+
+        Node temp=nn;
+        System.out.println("Enter the left data for Node :"+temp.data+" - ");
+        temp.left=insertion(new Node(sc.nextInt()));
+        System.out.println("Enter the right data for Node :"+temp.data+" - ");
+        temp.right=insertion(new Node(sc.nextInt()));
+        return temp;
+    }
+
+    public void find(int f, Node nn, Node rep){
+        if(nn==null){
+            return;
+        }
+        find(f,nn.left, rep);
+        if(nn.left!=null && nn.left.data==f) {
+            nn.left.data=rep.data;
+            return;
+        }
+        else if(nn.right!=null && nn.right.data==f){
+            nn.right.data=rep.data;
+            return;
+        }
+        find(f,nn.right, rep);
+    }
+
+    public void del(){
+        Scanner sc=new Scanner(System.in);
+        int f=sc.nextInt();
+        Node rep=delete(f,root);
+        find(f,root, rep);
+    }
+
+
+    public Node delete(int data, Node nn){
+        if(nn==null){
+            return null;
+        }
+        if(nn.left==null && nn.right==null){
+            root=null;
+            return null;
+        }
+        Node temp=nn;
+        if(nn.left!=null){
+            while(temp.left.left!=null){
+                temp=temp.left;
+            }
+            Node r=temp.left;
+            temp.left=null;
+            return r;
+        }
+        while(temp.right.right!=null){
+            temp=temp.right;
+        }
+        Node r=temp.right;
+        temp.right=null;
+        return r;
+    }
+
+    public static void levelorder(Node root) {
+        if (root == null) {
+            System.out.println("Null");
+            return;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Node currNode = q.remove();
+            if (currNode == null) {
+                System.out.println();
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            } else {
+                System.out.print(currNode.data + "\t");
+                if (currNode.left != null) {
+                    q.add(currNode.left);
+                }
+                if (currNode.right != null) {
+                    q.add(currNode.right);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        BTLL b=new BTLL();
+        b.insertion(new Node(5));
+        //b.traverse(b.root);
+        b.levelorder(b.root);
+        b.del();
+        //b.traverse(b.root);
+        b.levelorder(b.root);
+    }
+}
