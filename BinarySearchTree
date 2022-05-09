@@ -1,0 +1,148 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class BST1{
+    Node root;
+    class Node{
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data){
+            this.data=data;
+        }
+    }
+
+    
+    public void insert(int data){
+        Node newnode=new Node(data);
+        if(root==null){
+            root=newnode;
+            return;
+        }
+        Node curr=root;
+        Node parent=null;
+        while(true){
+            if(data<curr.data){
+                parent=curr;
+                if(curr.left!=null){
+                    curr=curr.left;
+                }
+                else{
+                    parent.left=newnode;
+                    return;
+                }
+            }
+            else if(data>curr.data){
+                parent=curr;
+                if(curr.right!=null){
+                    curr=curr.right;
+                }
+                else{
+                    parent.right=newnode;
+                    return;
+                }
+            }
+        }
+    }
+
+    public int mins(Node root){
+        int min=root.data;
+        while(root.left!=null){
+            min=root.data;
+            root=root.left;
+        }
+        return min;
+    }
+
+
+    public void deleteNode(int data, Node nn){
+        if(nn==null){
+            return;
+        }
+         if(data<nn.data){
+            find(data, nn.left);
+        }
+        else if(data>nn.data){
+            //System.out.println("step 1");
+            find(data, nn.right);
+        }
+        else if(data==nn.data){
+            //System.out.println("step 2");
+            if(nn.left==null && nn.right==null){
+                nn=null;
+            }
+            else if(nn.left==null || nn.right==null){
+                if(nn.left==null){
+                    nn=nn.right;
+                }
+                else{
+                    nn=nn.left;
+                }
+            }
+            else{
+                //System.out.println("step 3");
+//                Node t=maxleft(nn);
+//                System.out.println(nn.data);
+                nn=t;
+
+            }
+        }
+    }
+
+    public void display(Node root){
+        if(root==null) {
+            return;
+        }
+        display(root.left);
+        System.out.println(root.data);
+        display(root.right);
+    }
+
+    public static void levelorder(Node root) {
+        if (root == null) {
+            System.out.println("Null");
+            return;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Node currNode = q.remove();
+            if (currNode == null) {
+                System.out.println();
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            } else {
+                System.out.print(currNode.data + "\t");
+                if (currNode.left != null) {
+                    q.add(currNode.left);
+                }
+                if (currNode.right != null) {
+                    q.add(currNode.right);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        BST1 b=new BST1();
+        b.insert(10);
+        b.insert(5);
+        b.insert(15);
+        b.insert(16);
+        b.insert(14);
+        b.insert(4);
+        b.insert(6);
+        //b.insert(9);
+        b.levelorder();
+        b.deleteNode(4,b.root);
+        System.out.println();
+//        System.out.println(b.maxleft(b.root.right).data);
+        b.levelorder();
+    }
+}
